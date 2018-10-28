@@ -1,0 +1,29 @@
+units lj
+dimension 3
+boundary p p p
+atom_style atomic
+
+lattice fcc 0.01
+region simbox block 0 20 0 20 0 20
+create_box 1 simbox
+
+mass 1 1.0
+pair_style lj/cut 3.0
+pair_coeff 1 1 1.0 1.0 3.0
+
+create_atoms 1 box
+velocity all create 2.5 87287
+fix 1 all nve
+
+dump 1 all custom 10 dump.lammpstrj id type x y z vx vy vz
+thermo_style custom step time temp ke pe etotal cpuremain spcpu
+thermo 100
+
+fix velave all velocityaverage v.bin 10 100 2 3 4 0 $(lx) 0 $(ly/2) 0 $(lz/10)
+
+print "$(lx) $(ly) $(lz)"
+print "$(lx) $(ly/2) $(lz/10)"
+
+compute bins all chunk/atom bin/3d x lower $(lx/2) y lower $(ly/6) z lower $(lz/40) units box discard yes bound y 0 $(ly/2) bound z 0 $(lz/10)
+fix v all ave/chunk 10 10 100 bins vx vy vz file v.profile
+run 1000
