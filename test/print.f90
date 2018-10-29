@@ -1,5 +1,6 @@
 program print
     use iso_c_binding, only: c_int, c_long_long, c_double
+    implicit none
 
     integer(c_int) :: Nx, Ny, Nz
     integer(c_long_long) :: step
@@ -24,5 +25,5 @@ program print
 
         write(*,"(4f15.6)") data
     end do
+    close(u)
 end program
-
