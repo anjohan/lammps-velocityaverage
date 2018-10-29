@@ -3,7 +3,7 @@ program print
 
     integer(c_int) :: Nx, Ny, Nz
     integer(c_long_long) :: step
-    integer :: u, s, i, j, k
+    integer :: u, s
 
     real(c_double), allocatable :: data(:,:,:,:)
     real(c_double) :: xmin, xmax, ymin, ymax, zmin, zmax
@@ -22,13 +22,7 @@ program print
 
         write(*,*) step
 
-        do i = 1, Nx
-            do j = 1, Ny
-                do k = 1, Nz
-                    write(*,"(*(f15.6))") data(:, k, j, i)
-                end do
-            end do
-        end do
+        write(*,"(4f15.6)") data
     end do
 end program
 
