@@ -39,4 +39,5 @@ int main(){
     }
 
     fclose(f);
+    delete [] data;
 }
