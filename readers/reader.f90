@@ -12,11 +12,12 @@ module mod_velocity_reader
         integer :: Nx, Ny, Nz
         integer(int64) :: step, next_step
         logical :: eof
-        integer :: file_unit
-        character(len=:), allocatable :: filename
+        integer, private :: file_unit
+        character(len=:), allocatable, private :: filename
 
         contains
-            procedure :: read_step, get_next_step
+            procedure :: read_step
+            procedure, private :: get_next_step
             final :: close_reader
     end type
 
